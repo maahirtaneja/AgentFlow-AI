@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --bg-primary: #f7f7f5;
+    --bg-sidebar: #f2f2ef;
+    --bg-chat: #fbfbfa;
+    --bg-card: #ffffff;
+    --border-color: #e7e7e3;
+    --text-primary: #20201e;
+    --text-secondary: #858580;
+    --accent: #20201e;
+    --focus-ring: #8b8b84;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --bg-primary: #171716;
+    --bg-sidebar: #1b1b1a;
+    --bg-chat: #191918;
+    --bg-card: #222221;
+    --border-color: #30302e;
+    --text-primary: #f2f2ef;
+    --text-secondary: #a0a09a;
+    --accent: #f2f2ef;
+    --focus-ring: #a0a09a;
+  }
+
+  * {
+    border-color: var(--border-color);
+  }
+
+  html, body, #root {
+    min-height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-x: hidden;
+  }
+
+  button, a, input, textarea, select {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button, a {
+    transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease,
+      box-shadow 160ms ease, opacity 160ms ease, transform 160ms ease;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    color: var(--text-primary);
+    background: color-mix(in srgb, var(--text-secondary) 24%, transparent);
+  }
+}
+
+/* Quiet, low-contrast surfaces keep attention on the conversation. */
+.glass-panel,
+.glass-pill,
+.glass-input {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.glass-panel { box-shadow: 0 12px 40px -28px rgb(0 0 0 / 20%); }
+.glass-pill { box-shadow: none; }
+.glass-input { box-shadow: 0 10px 30px -24px rgb(0 0 0 / 28%); }
+.dark .glass-panel { box-shadow: 0 12px 40px -28px rgb(0 0 0 / 75%); }
+.dark .glass-input { box-shadow: 0 10px 30px -24px rgb(0 0 0 / 80%); }
+.chat-composer {
+  transition: border-color 220ms ease, box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.chat-composer:focus-within {
+  border-color: color-mix(in srgb, var(--text-secondary) 55%, var(--border-color));
+  box-shadow: 0 18px 46px -28px rgb(0 0 0 / 34%), 0 0 0 3px color-mix(in srgb, var(--text-secondary) 9%, transparent);
+  transform: translateY(-1px);
+}
+.subtle-glow { box-shadow: 0 12px 40px -28px rgb(0 0 0 / 20%); }
+.dark .subtle-glow { box-shadow: 0 12px 40px -28px rgb(0 0 0 / 75%); }
+
+/* Keep editor and embedded content from inheriting UI motion. */
+pre, code, iframe, canvas, .monaco-editor, .monaco-editor *,
+[data-no-motion], [data-no-motion] * {
+  transition: none !important;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #b7b7b0; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #858580; }
+.dark ::-webkit-scrollbar-thumb { background: #4a4a46; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #70706a; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
